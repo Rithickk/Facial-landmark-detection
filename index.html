@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Face Landmark Detection App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+    <style>
+  body {
+  font-family: 'Ubuntu', sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+#header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+#container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+#form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+h2 {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+th {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+#camera {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+#video, #canvas {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+#capture {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  #container {
+    width: 90%;
+  }
+}
+
+</style>
+
+ </head>
+  <body>
+    <div id="header">
+      <h1>Face Landmark Detection App</h1>
+    </div>
+    <div id="container">
+      <h2>Add a new face</h2>
+      <form id="form" method="post" action="">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="image">Image URL:</label>
+        <input type="text" id="image" name="image" required>
+        <input type="submit" value="Add Face">
+      </form>
+      <h2>Manage Faces</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>mahendra</td>
+            <td><img src="https://example.com/mahendra.jpg" alt="mahendra"></td>
+            <td><button>Delete</button></td>
+          </tr>
+          <tr>
+            <td>ramprasanth</td>
+            <td><img src="https://example.com/ramprasanth.jpg" alt="ramprasanth"></td>
+            <td><button>Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Face Detection</h2>
+  <div id="camera">
+    <video id="video" width="320" height="240" autoplay></video>
+    <canvas id="canvas" width="320" height="240"></canvas>
+    <button id="capture">Capture</button>
+  </div>
+  <script>
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+
+    const captureButton = document.getElementById("capture");
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    captureButton.addEventListener("click", () => {
+      // Draw the video frame onto the canvas
+      canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      const imageData = canvas.toDataURL();
+      console.log(imageData); // Print the image data to the console for testing purposes
+    });
+  </script>
+</div>
+  </body>
+</html>
